@@ -1,3 +1,31 @@
+<?php
+include 'db.php';
+
+if (isset($_SESSION["id"])) {
+  header("Location: index.php");
+  exit();
+}
+
+if (isset($_POST['email']) && isset($_POST['password'])) {
+  // clean data 
+  $email_login = stripslashes($_POST['email']);
+  $password_login = stripslashes($_POST['password']);
+  $email_login = mysqli_real_escape_string($connection, $email_login);
+  $password_login = mysqli_real_escape_string($connection, $password_login);
+
+  $result = mysqli_query($connection, "SELECT * FROM user WHERE email='" . $email_login . "' and password = '" . $password_login . "'");
+  $row  = mysqli_fetch_array($result);
+  if (is_array($row)) {
+    $_SESSION["id"] = $row['id'];
+    $_SESSION["name"] = $row['name'];
+    header("Location:index.php");
+  } else {
+    $error_message = "Invalid Email or Password!";
+  }
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,7 +33,7 @@
   <meta charset="utf-8" />
   <meta content="width=device-width, initial-scale=1.0" name="viewport" />
 
-  <title>DevFolio Bootstrap Portfolio Template - Index</title>
+  <title>Anas - Login</title>
   <meta content="" name="description" />
   <meta content="" name="keywords" />
 
@@ -54,94 +82,78 @@
       <div class="container">
         <div class="row">
           <div class="col-sm-12">
-            <div class="contact-mf">
-              <div id="contact" class="box-shadow-full">
-                <div class="row">
-                  <div class="col-md-6">
-                    <div class="title-box-2">
-                      <h5 class="title-left">Send Message Us</h5>
-                    </div>
-                    <div>
-                      <form action="forms/contact.php" method="post" role="form" class="php-email-form">
-                        <div class="row">
-                          <div class="col-md-12 mb-3">
-                            <div class="form-group">
-                              <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" required />
-                            </div>
-                          </div>
-                          <div class="col-md-12 mb-3">
-                            <div class="form-group">
-                              <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" required />
-                            </div>
-                          </div>
-                          <div class="col-md-12 mb-3">
-                            <div class="form-group">
-                              <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject" required />
-                            </div>
-                          </div>
-                          <div class="col-md-12">
-                            <div class="form-group">
-                              <textarea class="form-control" name="message" rows="5" placeholder="Message" required></textarea>
-                            </div>
-                          </div>
-                          <div class="col-md-12 text-center my-3">
-                            <div class="loading">Loading</div>
-                            <div class="error-message"></div>
-                            <div class="sent-message">
-                              Your message has been sent. Thank you!
-                            </div>
-                          </div>
-                          <div class="col-md-12 text-center">
-                            <button type="submit" class="button button-a button-big button-rouded">
-                              Send Message
-                            </button>
+            <div id="contact" class="box-shadow-full">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="title-box-2">
+                    <h5 class="title-left">Login</h5>
+                  </div>
+                  <div>
+                    <form action="login.php" method="post" role="form" class="email-form">
+                      <div class="row">
+                        <div class="col-md-12 mb-3">
+                          <div class="form-group">
+                            <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" required />
                           </div>
                         </div>
-                      </form>
-                    </div>
+                        <div class="col-md-12 mb-3">
+                          <div class="form-group">
+                            <input type="password" name="password" class="form-control" id="password" placeholder="Your Password" required />
+                          </div>
+                        </div>
+                        <div class="col-md-12 text-center my-3">
+                          <div class="error-message"><?php echo $error_message; ?></div>
+                        </div>
+                        <div class="col-md-12 text-center">
+                          <button type="submit" class="button button-a button-big button-rouded">
+                            Login
+                          </button>
+                        </div>
+                      </div>
+                    </form>
                   </div>
-                  <div class="col-md-6">
-                    <div class="title-box-2 pt-4 pt-md-0">
-                      <h5 class="title-left">Get in Touch</h5>
-                    </div>
-                    <div class="more-info">
-                      <p class="lead">
-                        Lorem ipsum dolor sit amet consectetur adipisicing
-                        elit. Facilis dolorum dolorem soluta quidem expedita
-                        aperiam aliquid at. Totam magni ipsum suscipit amet?
-                        Autem nemo esse laboriosam ratione nobis mollitia
-                        inventore?
-                      </p>
-                      <ul class="list-ico">
-                        <li>
-                          <span class="bi bi-geo-alt"></span> 329 WASHINGTON
-                          ST BOSTON, MA 02108
-                        </li>
-                        <li>
-                          <span class="bi bi-phone"></span> (617) 557-0089
-                        </li>
-                        <li>
-                          <span class="bi bi-envelope"></span>
-                          contact@example.com
-                        </li>
-                      </ul>
-                    </div>
-                    <div class="socials">
-                      <ul>
-                        <li>
-                          <a href=""><span class="ico-circle"><i class="bi bi-facebook"></i></span></a>
-                        </li>
-                        <li>
-                          <a href=""><span class="ico-circle"><i class="bi bi-instagram"></i></span></a>
-                        </li>
-                        <li>
-                          <a href=""><span class="ico-circle"><i class="bi bi-twitter"></i></span></a>
-                        </li>
-                        <li>
-                          <a href=""><span class="ico-circle"><i class="bi bi-linkedin"></i></span></a>
-                        </li>
-                      </ul>
-                    </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="title-box-2 pt-4 pt-md-0">
+                    <h5 class="title-left">Get in Touch</h5>
+                  </div>
+                  <div class="more-info">
+                    <p class="lead">
+                      Lorem ipsum dolor sit amet consectetur adipisicing
+                      elit. Facilis dolorum dolorem soluta quidem expedita
+                      aperiam aliquid at. Totam magni ipsum suscipit amet?
+                      Autem nemo esse laboriosam ratione nobis mollitia
+                      inventore?
+                    </p>
+                    <ul class="list-ico">
+                      <li>
+                        <span class="bi bi-geo-alt"></span> 329 WASHINGTON
+                        ST BOSTON, MA 02108
+                      </li>
+                      <li>
+                        <span class="bi bi-phone"></span> (617) 557-0089
+                      </li>
+                      <li>
+                        <span class="bi bi-envelope"></span>
+                        contact@example.com
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="socials">
+                    <ul>
+                      <li>
+                        <a href=""><span class="ico-circle"><i class="bi bi-facebook"></i></span></a>
+                      </li>
+                      <li>
+                        <a href=""><span class="ico-circle"><i class="bi bi-instagram"></i></span></a>
+                      </li>
+                      <li>
+                        <a href=""><span class="ico-circle"><i class="bi bi-twitter"></i></span></a>
+                      </li>
+                      <li>
+                        <a href=""><span class="ico-circle"><i class="bi bi-linkedin"></i></span></a>
+                      </li>
+                    </ul>
                   </div>
                 </div>
               </div>
@@ -183,7 +195,6 @@
   <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
   <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
   <script src="assets/vendor/typed.js/typed.min.js"></script>
-  <script src="assets/vendor/php-email-form/validate.js"></script>
 
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>

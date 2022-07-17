@@ -1,3 +1,7 @@
+<?php
+include 'db.php'
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,7 +9,7 @@
   <meta charset="utf-8" />
   <meta content="width=device-width, initial-scale=1.0" name="viewport" />
 
-  <title>DevFolio Bootstrap Portfolio Template - Index</title>
+  <title>Anas - About</title>
   <meta content="" name="description" />
   <meta content="" name="keywords" />
 
@@ -38,7 +42,19 @@
           <li><a class="nav-link scrollto" href="/services.php">Services</a></li>
           <li><a class="nav-link scrollto" href="/work.php">Work</a></li>
           <li><a class="nav-link scrollto" href="/blog.php">Blog</a></li>
-          <li><a class="nav-link scrollto" href="/login.php">Login</a></li>
+          <li>
+            <?php
+            if (isset($_SESSION["id"])) {
+            ?>
+              <a class="nav-link scrollto" href="/logout.php">Logout</a>
+            <?php
+            } else {
+            ?>
+              <a class="nav-link scrollto" href="/login.php">Login</a>
+            <?php
+            }
+            ?>
+          </li>
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav>
@@ -169,7 +185,6 @@
   <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
   <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
   <script src="assets/vendor/typed.js/typed.min.js"></script>
-  <script src="assets/vendor/php-email-form/validate.js"></script>
 
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
