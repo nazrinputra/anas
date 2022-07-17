@@ -18,9 +18,9 @@ if (isset($_SESSION["id"])) {
 
 if (getenv('APP_ENV' == 'PROD')) {
     $hostname = "us-cdbr-east-06.cleardb.net";
-    $username = "bd7154bcfb7751";
-    $password = "41b3457f";
-    $dbname = "heroku_fe00c8042680717";
+    $username = "bd4fe0073b4e37";
+    $password = "061f9f97";
+    $dbname = "heroku_c891a770183e0fe";
 } else {
     $hostname = "localhost";
     $username = "root";
