@@ -1,15 +1,6 @@
 {
-    "name": "putra/anas",
-    "autoload": {
-        "psr-4": {
-            "Putra\\Anas\\": "src/"
-        }
-    },
-    "authors": [
-        {
-            "name": "Nazrin.Putra",
-            "email": "nazrin.putra@tm.com.my"
-        }
-    ],
-    "require": {}
+    "require": {},
+    "require-dev": {
+        "heroku/heroku-buildpack-php": "*"
+    }
 }
