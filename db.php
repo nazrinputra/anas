@@ -1,4 +1,5 @@
 <?php
+global $error_message, $logged_in;
 
 // Enable us to use Headers
 ob_start();
@@ -8,7 +9,12 @@ if (!isset($_SESSION)) {
     session_start();
 }
 
-global $error_message;
+// Check logged in status
+if (isset($_SESSION["id"])) {
+    $logged_in = true;
+} else {
+    $logged_in = false;
+}
 
 $hostname = "localhost";
 $username = "root";

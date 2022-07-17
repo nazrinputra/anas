@@ -44,7 +44,7 @@ include 'db.php'
           <li><a class="nav-link scrollto" href="/blog.php">Blog</a></li>
           <li>
             <?php
-            if (isset($_SESSION["id"])) {
+            if ($logged_in) {
             ?>
               <a class="nav-link scrollto" href="/logout.php">Logout</a>
             <?php
@@ -72,7 +72,7 @@ include 'db.php'
           <!--<p class="display-6 color-d">Hello, world!</p>-->
           <h1 class="hero-title mb-4">I am
             <?php
-            if (isset($_SESSION["name"])) {
+            if ($logged_in) {
               echo $_SESSION["name"];
             } else {
               echo "Unregistered";

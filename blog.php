@@ -44,7 +44,7 @@ include 'db.php'
           <li><a class="nav-link scrollto active" href="/blog.php">Blog</a></li>
           <li>
             <?php
-            if (isset($_SESSION["id"])) {
+            if ($logged_in) {
             ?>
               <a class="nav-link scrollto" href="/logout.php">Logout</a>
             <?php
