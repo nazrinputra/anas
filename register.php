@@ -6,35 +6,32 @@ if (isset($_SESSION["id"])) {
   exit();
 }
 
-if (isset($_POST['email']) && isset($_POST['password'])) {
+if (isset($_POST['name']) && isset($_POST['email']) && isset($_POST['password'])) {
   // clean data 
-  $email_login = stripslashes($_POST['email']);
-  $password_login = stripslashes($_POST['password']);
-  $email_login = mysqli_real_escape_string($connection, $email_login);
-  $password_login = mysqli_real_escape_string($connection, $password_login);
+  $name_register = stripslashes($_POST['name']);
+  $email_register = stripslashes($_POST['email']);
+  $password_register = stripslashes($_POST['password']);
 
-  $sql = "SELECT * FROM user WHERE email='{$email_login}'";
-  $result = mysqli_query($connection, $sql);
+  $name_register = mysqli_real_escape_string($connection, $name_register);
+  $email_register = mysqli_real_escape_string($connection, $email_register);
+  $password_register = mysqli_real_escape_string($connection, $password_register);
 
-  $row  = mysqli_fetch_array($result);
+  // Password hash
+  $password_hash = password_hash($password_register, PASSWORD_DEFAULT);
 
-  if (is_array($row)) {
-    $password_db = $row['password'];
+  $sql = "INSERT into `user` (name, email, password) VALUES ('{$name_register}', '{$email_register}', '{$password_hash}')";
+  $sqlQuery = mysqli_query($connection, $sql);
 
-    echo $password_db;
-    echo $password_login;
-
-    if (password_verify($password_login, $password_db)) {
-      $_SESSION["id"] = $row['id'];
-      $_SESSION["name"] = $row['name'];
-      header("Location:index.php");
-    } else {
-      $error_message = "Invalid Password!";
-    }
-  } else {
-    $error_message = "Invalid Email!";
+  if (!$sqlQuery) {
+    die("Database connection not established." . mysqli_error($connection));
   }
+
+  echo '<script>
+  alert("Your account has been registered. Please proceed to login page.");
+  window.location.href="index.php";
+  </script>';
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -44,7 +41,7 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
   <meta charset="utf-8" />
   <meta content="width=device-width, initial-scale=1.0" name="viewport" />
 
-  <title>Anas - Login</title>
+  <title>Anas - Register</title>
   <meta content="" name="description" />
   <meta content="" name="keywords" />
 
@@ -77,7 +74,7 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
           <li><a class="nav-link scrollto" href="/services.php">Services</a></li>
           <li><a class="nav-link scrollto" href="/work.php">Work</a></li>
           <li><a class="nav-link scrollto" href="/blog.php">Blog</a></li>
-          <li><a class="nav-link scrollto active" href="/login.php">Login</a></li>
+          <li><a class="nav-link scrollto" href="/login.php">Login</a></li>
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav>
@@ -97,11 +94,16 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
               <div class="row">
                 <div class="col-md-6">
                   <div class="title-box-2">
-                    <h5 class="title-left">Login</h5>
+                    <h5 class="title-left">Register</h5>
                   </div>
                   <div>
-                    <form action="login.php" method="post" role="form" class="email-form">
+                    <form action="register.php" method="post" role="form" class="email-form">
                       <div class="row">
+                        <div class="col-md-12 mb-3">
+                          <div class="form-group">
+                            <input type="text" class="form-control" name="name" id="name" placeholder="Your Name" required />
+                          </div>
+                        </div>
                         <div class="col-md-12 mb-3">
                           <div class="form-group">
                             <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" required />
@@ -113,14 +115,14 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
                           </div>
                         </div>
                         <div class="col-md-6 offset-6 mb-3">
-                          <a href="/register.php">No account yet? Register here</a>
+                          <a href="/login.php">Have an account? Login here</a>
                         </div>
                         <div class="col-md-12 text-center my-3">
                           <div class="error-message"><?php echo $error_message; ?></div>
                         </div>
                         <div class="col-md-12 text-center">
                           <button type="submit" class="button button-a button-big button-rouded">
-                            Login
+                            Register
                           </button>
                         </div>
                       </div>
