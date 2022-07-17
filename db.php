@@ -16,7 +16,7 @@ if (isset($_SESSION["id"])) {
     $logged_in = false;
 }
 
-if (getenv('ENVIRONMENT' == 'PROD')) {
+if (getenv('APP_ENV' == 'PROD')) {
     $hostname = "us-cdbr-east-06.cleardb.net";
     $username = "bd7154bcfb7751";
     $password = "41b3457f";
