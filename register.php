@@ -6,7 +6,7 @@ if (isset($_SESSION["id"])) {
   exit();
 }
 
-if (isset($_POST['name']) && isset($_POST['email']) && isset($_POST['password'])) {
+if (isset($_POST['registerButton'])) {
   // clean data 
   $name_register = stripslashes($_POST['name']);
   $email_register = stripslashes($_POST['email']);
@@ -19,17 +19,21 @@ if (isset($_POST['name']) && isset($_POST['email']) && isset($_POST['password'])
   // Password hash
   $password_hash = password_hash($password_register, PASSWORD_DEFAULT);
 
-  $sql = "INSERT into `user` (name, email, password) VALUES ('{$name_register}', '{$email_register}', '{$password_hash}')";
-  $sqlQuery = mysqli_query($connection, $sql);
+  $sql = "SELECT * FROM user WHERE email='{$email_register}'";
+  $result = mysqli_query($connection, $sql);
+  $row  = mysqli_fetch_array($result);
+  if (is_array($row)) {
+    $error_message = "Email already exist!";
+  } else {
+    $sql = "INSERT into `user` (name, email, password) VALUES ('{$name_register}', '{$email_register}', '{$password_hash}')";
+    $sqlQuery = mysqli_query($connection, $sql);
 
-  if (!$sqlQuery) {
-    die("Database connection not established." . mysqli_error($connection));
+    if (!$sqlQuery) {
+      die("Database connection not established. " . mysqli_error($connection));
+    }
+
+    echo '<script>alert("Your account has been registered. Please proceed to login page.");window.location.href="index.php";</script>';
   }
-
-  echo '<script>
-  alert("Your account has been registered. Please proceed to login page.");
-  window.location.href="index.php";
-  </script>';
 }
 
 ?>
@@ -121,7 +125,7 @@ if (isset($_POST['name']) && isset($_POST['email']) && isset($_POST['password'])
                           <div class="error-message"><?php echo $error_message; ?></div>
                         </div>
                         <div class="col-md-12 text-center">
-                          <button type="submit" class="button button-a button-big button-rouded">
+                          <button type="submit" name="registerButton" class="button button-a button-big button-rouded">
                             Register
                           </button>
                         </div>
