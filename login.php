@@ -27,6 +27,7 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
     if (password_verify($password_login, $password_db)) {
       $_SESSION["id"] = $row['id'];
       $_SESSION["name"] = $row['name'];
+      $_SESSION["email"] = $row['email'];
       header("Location:index.php");
     } else {
       $error_message = "Invalid Password!";
