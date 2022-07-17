@@ -42,6 +42,7 @@ include 'db.php'
           <li><a class="nav-link scrollto" href="/services.php">Services</a></li>
           <li><a class="nav-link scrollto active" href="/work.php">Work</a></li>
           <li><a class="nav-link scrollto" href="/blog.php">Blog</a></li>
+          <li><a class="nav-link scrollto" href="/users.php">Users</a></li>
           <li>
             <?php
             if ($logged_in) {

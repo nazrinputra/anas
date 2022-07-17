@@ -1,8 +1,19 @@
 <?php
 include 'db.php';
 
-$sql = "SELECT * FROM blog";
+if (isset($_GET['delete'])) {
+  $sql = "DELETE FROM user WHERE id={$_GET['delete']}";
+  $result = mysqli_query($connection, $sql);
+}
+
+if (isset($_SESSION['id'])) {
+  $sql = "SELECT * FROM user WHERE id!={$_SESSION['id']}";
+} else {
+  $sql = "SELECT * FROM user";
+}
+
 $result = mysqli_query($connection, $sql);
+$count = mysqli_num_rows($result)
 ?>
 
 <!DOCTYPE html>
@@ -12,7 +23,7 @@ $result = mysqli_query($connection, $sql);
   <meta charset="utf-8" />
   <meta content="width=device-width, initial-scale=1.0" name="viewport" />
 
-  <title>Anas - Blog</title>
+  <title>Anas - Users</title>
   <meta content="" name="description" />
   <meta content="" name="keywords" />
 
@@ -44,8 +55,8 @@ $result = mysqli_query($connection, $sql);
           <li><a class="nav-link scrollto" href="/about.php">About</a></li>
           <li><a class="nav-link scrollto" href="/services.php">Services</a></li>
           <li><a class="nav-link scrollto" href="/work.php">Work</a></li>
-          <li><a class="nav-link scrollto active" href="/blog.php">Blog</a></li>
-          <li><a class="nav-link scrollto" href="/users.php">Users</a></li>
+          <li><a class="nav-link scrollto" href="/blog.php">Blog</a></li>
+          <li><a class="nav-link scrollto active" href="/users.php">Users</a></li>
           <li>
             <?php
             if ($logged_in) {
@@ -68,13 +79,13 @@ $result = mysqli_query($connection, $sql);
   <!-- End Header -->
 
   <main id="main" class="mt-5">
-    <!-- ======= Blog Section ======= -->
-    <section id="blog" class="blog-mf sect-pt4 route">
+    <!-- ======= Users Section ======= -->
+    <section id="users" class="users-mf pt-5 route">
       <div class="container">
         <div class="row">
           <div class="col-sm-12">
             <div class="title-box text-center">
-              <h3 class="title-a">Blog</h3>
+              <h3 class="title-a">Users</h3>
               <p class="subtitle-a">
                 Lorem ipsum, dolor sit amet consectetur adipisicing elit.
               </p>
@@ -83,51 +94,90 @@ $result = mysqli_query($connection, $sql);
           </div>
         </div>
         <div class="row">
-          <!-- Blog Card -->
+          <!-- User Box -->
           <?php
-          while ($row = mysqli_fetch_array($result)) {
+          if ($count == 0) {
           ?>
-            <div class="col-md-4">
-              <div class="card card-blog">
-                <div class="card-img">
-                  <a href="#"><img src="assets/img/post-1.jpg" alt="" class="img-fluid" /></a>
+            <div class="col-md-4 offset-4">
+              <div class="service-box">
+                <div class="service-ico">
+                  <span class="ico-circle"><i class="bi bi-person-x-fill"></i></span>
                 </div>
-                <div class="card-body">
-                  <div class="card-category-box">
-                    <div class="card-category">
-                      <h6 class="category">
-                        <?php echo $row['tag']; ?>
-                      </h6>
-                    </div>
-                  </div>
-                  <h3 class="card-title">
-                    <a href="#"><?php echo $row['title']; ?></a>
-                  </h3>
-                  <p class="card-description">
-                    <?php echo $row['content']; ?>
+                <div class="service-content">
+                  <p class="s-description text-center">
+                    Uh-oh! There are no other users!
                   </p>
-                </div>
-                <div class="card-footer">
-                  <div class="post-author">
-                    <a href="#">
-                      <img src="assets/img/testimonial-2.jpg" alt="" class="avatar rounded-circle" />
-                      <span class="author"><?php echo $row['author']; ?></span>
-                    </a>
-                  </div>
-                  <div class="post-date">
-                    <span class="bi bi-clock"></span> 10 min
-                  </div>
                 </div>
               </div>
             </div>
+            <?php
+          } else if ($count == 1) {
+            while ($row = mysqli_fetch_array($result)) {
+            ?>
+              <div class="col-md-4 offset-4">
+                <div class="service-box">
+                  <div class="service-ico">
+                    <span class="ico-circle"><i class="bi bi-person-fill"></i></span>
+                  </div>
+                  <div class="service-content">
+                    <h2 class="s-title"><?php echo $row['name']; ?></h2>
+                    <p class="s-description text-center">
+                      <?php echo $row['email']; ?>
+                    </p>
+                    <?php
+                    if ($logged_in) {
+                    ?>
+                      <!-- <button type="button" class="button button-a button-big button-rouded">
+                      View
+                    </button> -->
+                      <a href="users.php?delete=<?php echo $row['id']; ?>" type="button" class="button button-b button-big button-rouded">
+                        Delete
+                      </a>
+                    <?php
+                    }
+                    ?>
+                  </div>
+                </div>
+              </div>
+            <?php
+            }
+          } else {
+            while ($row = mysqli_fetch_array($result)) {
+            ?>
+              <div class="col-md-4">
+                <div class="service-box">
+                  <div class="service-ico">
+                    <span class="ico-circle"><i class="bi bi-person-fill"></i></span>
+                  </div>
+                  <div class="service-content">
+                    <h2 class="s-title"><?php echo $row['name']; ?></h2>
+                    <p class="s-description text-center">
+                      <?php echo $row['email']; ?>
+                    </p>
+                    <?php
+                    if ($logged_in) {
+                    ?>
+                      <!-- <button type="button" class="button button-a button-big button-rouded">
+                      View
+                    </button> -->
+                      <a href="users.php?delete=<?php echo $row['id']; ?>" type="button" class="button button-b button-big button-rouded">
+                        Delete
+                      </a>
+                    <?php
+                    }
+                    ?>
+                  </div>
+                </div>
+              </div>
           <?php
+            }
           }
           ?>
-          <!-- End Blog Card -->
+          <!-- End User Box -->
         </div>
       </div>
     </section>
-    <!-- End Blog Section -->
+    <!-- End Services Section -->
   </main>
   <!-- End #main -->
 

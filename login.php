@@ -78,6 +78,7 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
           <li><a class="nav-link scrollto" href="/services.php">Services</a></li>
           <li><a class="nav-link scrollto" href="/work.php">Work</a></li>
           <li><a class="nav-link scrollto" href="/blog.php">Blog</a></li>
+          <li><a class="nav-link scrollto" href="/users.php">Users</a></li>
           <li><a class="nav-link scrollto active" href="/login.php">Login</a></li>
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>

@@ -433,6 +433,19 @@ a:hover {
   border-color: #cde1f8;
 }
 
+.button-b {
+  text-decoration: none;
+  background-color: #ff0000;
+  color: #fff;
+  border-color: #cde1f8;
+}
+
+.button-b:hover {
+  background-color: #d30000;
+  color: #fff;
+  transition: all 500ms ease;
+}
+
 .button-big {
   padding: 0.9rem 2.3rem;
   font-size: 1.2rem;
