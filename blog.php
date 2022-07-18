@@ -90,7 +90,7 @@ $result = mysqli_query($connection, $sql);
             <div class="col-md-4">
               <div class="card card-blog">
                 <div class="card-img">
-                  <a href="#"><img src="assets/img/post-1.jpg" alt="" class="img-fluid" /></a>
+                  <a href="#"><img src="assets/img/<?php echo $row['image'] ?>" alt="" class="img-fluid" /></a>
                 </div>
                 <div class="card-body">
                   <div class="card-category-box">
@@ -110,8 +110,15 @@ $result = mysqli_query($connection, $sql);
                 <div class="card-footer">
                   <div class="post-author">
                     <a href="#">
-                      <img src="assets/img/testimonial-2.jpg" alt="" class="avatar rounded-circle" />
-                      <span class="author"><?php echo $row['author']; ?></span>
+                      <img src="assets/img/<?php echo $row['image'] ?>" alt="" class="avatar rounded-circle" />
+                      <?php
+                      $author_id = $row['author_id'];
+                      $sqlAuthor = "SELECT * FROM user WHERE id='{$author_id}'";
+                      $resultAuthor = mysqli_query($connection, $sqlAuthor);
+
+                      $rowAuthor  = mysqli_fetch_array($resultAuthor);
+                      ?>
+                      <span class="author"><?php echo $rowAuthor['name']; ?></span>
                     </a>
                   </div>
                   <div class="post-date">
