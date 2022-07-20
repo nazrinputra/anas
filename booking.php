@@ -1,8 +1,5 @@
 <?php
 include 'db.php';
-
-$sql = "SELECT * FROM blog";
-$result = mysqli_query($connection, $sql);
 ?>
 
 <!DOCTYPE html>
@@ -12,7 +9,7 @@ $result = mysqli_query($connection, $sql);
   <meta charset="utf-8" />
   <meta content="width=device-width, initial-scale=1.0" name="viewport" />
 
-  <title>Anas - Blog</title>
+  <title>Anas - Booking</title>
   <meta content="" name="description" />
   <meta content="" name="keywords" />
 
@@ -44,7 +41,7 @@ $result = mysqli_query($connection, $sql);
           <li><a class="nav-link scrollto" href="/about.php">About</a></li>
           <li><a class="nav-link scrollto" href="/services.php">Services</a></li>
           <li><a class="nav-link scrollto" href="/work.php">Work</a></li>
-          <li><a class="nav-link scrollto active" href="/blog.php">Blog</a></li>
+          <li><a class="nav-link scrollto active" href="/booking.php">booking</a></li>
           <li><a class="nav-link scrollto" href="/users.php">Users</a></li>
           <li>
             <?php
@@ -74,7 +71,7 @@ $result = mysqli_query($connection, $sql);
         <div class="row">
           <div class="col-sm-12">
             <div class="title-box text-center">
-              <h3 class="title-a">Blog</h3>
+              <h3 class="title-a">Booking</h3>
               <p class="subtitle-a">
                 Lorem ipsum, dolor sit amet consectetur adipisicing elit.
               </p>
@@ -84,52 +81,39 @@ $result = mysqli_query($connection, $sql);
         </div>
         <div class="row">
           <!-- Blog Card -->
-          <?php
-          while ($row = mysqli_fetch_array($result)) {
-          ?>
-            <div class="col-md-4">
-              <div class="card card-blog">
-                <div class="card-img">
-                  <a href="#"><img src="assets/img/<?php echo $row['image'] ?>" alt="" class="img-fluid" /></a>
+          <div class="col-md-4">
+            <div class="card card-blog">
+              <div class="card-img">
+                <a href="#"><img src="assets/img/post-1.jpg" alt="" class="img-fluid" /></a>
+              </div>
+              <div class="card-body">
+                <div class="card-category-box">
+                  <div class="card-category">
+                    <h6 class="category">
+                      Travel
+                    </h6>
+                  </div>
                 </div>
-                <div class="card-body">
-                  <div class="card-category-box">
-                    <div class="card-category">
-                      <h6 class="category">
-                        <?php echo $row['tag']; ?>
-                      </h6>
-                    </div>
-                  </div>
-                  <h3 class="card-title">
-                    <a href="#"><?php echo $row['title']; ?></a>
-                  </h3>
-                  <p class="card-description">
-                    <?php echo $row['content']; ?>
-                  </p>
+                <h3 class="card-title">
+                  <a href="#">Something something title</a>
+                </h3>
+                <p class="card-description">
+                  Lorem dipsum sit amet
+                </p>
+              </div>
+              <div class="card-footer">
+                <div class="post-author">
+                  <a href="#">
+                    <img src="assets/img/testimonial-2.jpg" alt="" class="avatar rounded-circle" />
+                    <span class="author">Morgan Freeman</span>
+                  </a>
                 </div>
-                <div class="card-footer">
-                  <div class="post-author">
-                    <a href="#">
-                      <img src="assets/img/<?php echo $row['image'] ?>" alt="" class="avatar rounded-circle" />
-                      <?php
-                      $author_id = $row['author_id'];
-                      $sqlAuthor = "SELECT * FROM user WHERE id='{$author_id}'";
-                      $resultAuthor = mysqli_query($connection, $sqlAuthor);
-
-                      $rowAuthor  = mysqli_fetch_array($resultAuthor);
-                      ?>
-                      <span class="author"><?php echo $rowAuthor['name']; ?></span>
-                    </a>
-                  </div>
-                  <div class="post-date">
-                    <span class="bi bi-clock"></span> 10 min
-                  </div>
+                <div class="post-date">
+                  <span class="bi bi-clock"></span> 10 min
                 </div>
               </div>
             </div>
-          <?php
-          }
-          ?>
+          </div>
           <!-- End Blog Card -->
         </div>
       </div>
