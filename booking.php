@@ -1,5 +1,8 @@
 <?php
 include 'db.php';
+
+$sql = "SELECT * FROM booking";
+$result = mysqli_query($connection, $sql);
 ?>
 
 <!DOCTYPE html>
@@ -114,28 +117,25 @@ include 'db.php';
           create: {
             text: 'create booking',
             click: function() {
-              alert('clicked create button!');
+              window.location.href = "index.php";
             }
           },
         },
-        events: [{
-            title: 'ABC 1234 - Honda',
-            url: 'about.php',
-            start: '2022-07-02'
-          },
-          {
-            title: 'CDE 4567 - Audi',
-            url: 'users.php',
-            start: '2022-07-07'
-          }, {
-            title: 'CDE 4567 - Audi 2',
-            url: 'work.php',
-            start: '2022-07-07'
-          }, {
-            title: 'CDE 4567 - Audi 3',
-            url: 'services.php',
-            start: '2022-07-07'
+        events: [
+          <?php
+          while ($row = mysqli_fetch_array($result)) {
+            $car_id = $row['car_id'];
+            $sqlCar = "SELECT * FROM car WHERE id={$car_id}";
+            $resultCar = mysqli_query($connection, $sqlCar);
+            $rowCar = mysqli_fetch_array($resultCar)
+          ?> {
+              title: '<?php echo $rowCar['plate'] . " - " . $rowCar['model'] ?>',
+              url: 'about.php',
+              start: '<?php echo $row['date'] ?>'
+            },
+          <?php
           }
+          ?>
         ]
       });
       calendar.render();
