@@ -80,12 +80,10 @@ $result = mysqli_query($connection, $sql);
         <div class="col-sm-12">
           <div class="copyright-box">
             <p class="copyright">
-              &copy; Copyright <strong>Anas</strong>. All Rights Reserved
+              &copy; Copyright <strong>Anas</strong> <?php echo date("Y"); ?>
+              . All Rights Reserved
             </p>
-            <div class="credits">
-              Designed by
-              <a href="#">BootstrapMade</a>
-            </div>
+
           </div>
         </div>
       </div>
