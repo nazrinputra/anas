@@ -1,7 +1,7 @@
 <?php
 include 'db.php';
 
-if (isset($_SESSION["id"])) {
+if ($logged_in) {
   header("Location: index.php");
   exit();
 }
