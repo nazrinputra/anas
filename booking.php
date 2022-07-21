@@ -22,16 +22,17 @@ include 'db.php';
   <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet" />
   <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet" />
   <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet" />
+  <link href="assets/vendor/fullcalendar/main.css" rel="stylesheet" />
 
   <!-- Template Main CSS File -->
-  <link href="assets/css/style.css" rel="stylesheet" />
+  <link href=" assets/css/style.css" rel="stylesheet" />
 </head>
 
 <body>
   <!-- ======= Header ======= -->
   <header id="header" class="fixed-top header-scrolled">
     <div class="container d-flex align-items-center justify-content-between">
-      <h1 class="logo"><a href="index.html">DevFolio</a></h1>
+      <h1 class="logo"><a href="index.html">Anas</a></h1>
       <!-- Uncomment below if you prefer to use an image logo -->
       <!-- <a href="index.html" class="logo"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
 
@@ -65,60 +66,7 @@ include 'db.php';
   <!-- End Header -->
 
   <main id="main" class="mt-5">
-    <!-- ======= Blog Section ======= -->
-    <section id="blog" class="blog-mf sect-pt4 route">
-      <div class="container">
-        <div class="row">
-          <div class="col-sm-12">
-            <div class="title-box text-center">
-              <h3 class="title-a">Booking</h3>
-              <p class="subtitle-a">
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-              </p>
-              <div class="line-mf"></div>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <!-- Blog Card -->
-          <div class="col-md-4">
-            <div class="card card-blog">
-              <div class="card-img">
-                <a href="#"><img src="assets/img/post-1.jpg" alt="" class="img-fluid" /></a>
-              </div>
-              <div class="card-body">
-                <div class="card-category-box">
-                  <div class="card-category">
-                    <h6 class="category">
-                      Travel
-                    </h6>
-                  </div>
-                </div>
-                <h3 class="card-title">
-                  <a href="#">Something something title</a>
-                </h3>
-                <p class="card-description">
-                  Lorem dipsum sit amet
-                </p>
-              </div>
-              <div class="card-footer">
-                <div class="post-author">
-                  <a href="#">
-                    <img src="assets/img/testimonial-2.jpg" alt="" class="avatar rounded-circle" />
-                    <span class="author">Morgan Freeman</span>
-                  </a>
-                </div>
-                <div class="post-date">
-                  <span class="bi bi-clock"></span> 10 min
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- End Blog Card -->
-        </div>
-      </div>
-    </section>
-    <!-- End Blog Section -->
+    <div id='calendar' class="p-5 m-5"></div>
   </main>
   <!-- End #main -->
 
@@ -129,7 +77,7 @@ include 'db.php';
         <div class="col-sm-12">
           <div class="copyright-box">
             <p class="copyright">
-              &copy; Copyright <strong>DevFolio</strong>. All Rights Reserved
+              &copy; Copyright <strong>Anas</strong>. All Rights Reserved
             </p>
             <div class="credits">
               Designed by
@@ -151,6 +99,48 @@ include 'db.php';
   <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
   <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
   <script src="assets/vendor/typed.js/typed.min.js"></script>
+  <script src="assets/vendor/fullcalendar/main.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var calendarEl = document.getElementById('calendar');
+      var calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'dayGridMonth',
+        headerToolbar: {
+          left: 'dayGridMonth,timeGridWeek,timeGridDay',
+          center: 'title',
+          right: 'create today,prev,next'
+        },
+        customButtons: {
+          create: {
+            text: 'create booking',
+            click: function() {
+              alert('clicked create button!');
+            }
+          },
+        },
+        events: [{
+            title: 'ABC 1234 - Honda',
+            url: 'about.php',
+            start: '2022-07-02'
+          },
+          {
+            title: 'CDE 4567 - Audi',
+            url: 'users.php',
+            start: '2022-07-07'
+          }, {
+            title: 'CDE 4567 - Audi 2',
+            url: 'work.php',
+            start: '2022-07-07'
+          }, {
+            title: 'CDE 4567 - Audi 3',
+            url: 'services.php',
+            start: '2022-07-07'
+          }
+        ]
+      });
+      calendar.render();
+    });
+  </script>
 
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
