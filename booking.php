@@ -115,19 +115,19 @@ $result = mysqli_query($connection, $sql);
           create: {
             text: 'create booking',
             click: function() {
-              window.location.href = "index.php";
+              window.location.href = "create_booking.php";
             }
           },
         },
         events: [
           <?php
           while ($row = mysqli_fetch_array($result)) {
-            $car_id = $row['car_id'];
-            $sqlCar = "SELECT * FROM car WHERE id={$car_id}";
-            $resultCar = mysqli_query($connection, $sqlCar);
-            $rowCar = mysqli_fetch_array($resultCar)
+            $customer_id = $row['customer_id'];
+            $sqlCustomer = "SELECT * FROM customer WHERE id={$customer_id}";
+            $resultCustomer = mysqli_query($connection, $sqlCustomer);
+            $rowCustomer = mysqli_fetch_array($resultCustomer)
           ?> {
-              title: '<?php echo $rowCar['plate'] . " - " . $rowCar['model'] ?>',
+              title: '<?php echo $rowCustomer['plate'] . " - " . $rowCustomer['model'] ?>',
               url: 'about.php',
               start: '<?php echo $row['date'] ?>'
             },
