@@ -45,7 +45,7 @@ $count = mysqli_num_rows($result)
   <!-- ======= Header ======= -->
   <header id="header" class="fixed-top header-scrolled">
     <div class="container d-flex align-items-center justify-content-between">
-      <h1 class="logo"><a href="index.html">DevFolio</a></h1>
+      <h1 class="logo"><a href="index.html">Anas</a></h1>
       <!-- Uncomment below if you prefer to use an image logo -->
       <!-- <a href="index.html" class="logo"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
 
@@ -188,7 +188,7 @@ $count = mysqli_num_rows($result)
         <div class="col-sm-12">
           <div class="copyright-box">
             <p class="copyright">
-              &copy; Copyright <strong>DevFolio</strong>. All Rights Reserved
+              &copy; Copyright <strong>Anas</strong>. All Rights Reserved
             </p>
             <div class="credits">
               Designed by
