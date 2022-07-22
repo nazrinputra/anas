@@ -1,5 +1,8 @@
 <?php
-include 'db.php'
+include 'db.php';
+
+$sql = "SELECT * FROM service";
+$result = mysqli_query($connection, $sql);
 ?>
 
 <!DOCTYPE html>
@@ -38,7 +41,6 @@ include 'db.php'
       <nav id="navbar" class="navbar">
         <ul>
           <li><a class="nav-link scrollto" href="/index.php">Home</a></li>
-          <li><a class="nav-link scrollto" href="/about.php">About</a></li>
           <li><a class="nav-link scrollto active" href="/services.php">Services</a></li>
           <li><a class="nav-link scrollto" href="/work.php">Work</a></li>
           <li><a class="nav-link scrollto" href="/booking.php">booking</a></li>
@@ -66,7 +68,7 @@ include 'db.php'
 
   <main id="main" class="mt-5">
     <!-- ======= Services Section ======= -->
-    <section id="services" class="services-mf pt-5 route">
+    <section id="services" class="services-mf pt-5 route" style="background-image: url(assets/img/overlay-bg.jpg)">
       <div class="container">
         <div class="row">
           <div class="col-sm-12">
@@ -80,96 +82,25 @@ include 'db.php'
           </div>
         </div>
         <div class="row">
-          <div class="col-md-4">
-            <div class="service-box">
-              <div class="service-ico">
-                <span class="ico-circle"><i class="bi bi-briefcase"></i></span>
-              </div>
-              <div class="service-content">
-                <h2 class="s-title">Web Design</h2>
-                <p class="s-description text-center">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Magni adipisci eaque autem fugiat! Quia, provident vitae!
-                  Magni tempora perferendis eum non provident.
-                </p>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="service-box">
-              <div class="service-ico">
-                <span class="ico-circle"><i class="bi bi-card-checklist"></i></span>
-              </div>
-              <div class="service-content">
-                <h2 class="s-title">Web Development</h2>
-                <p class="s-description text-center">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Magni adipisci eaque autem fugiat! Quia, provident vitae!
-                  Magni tempora perferendis eum non provident.
-                </p>
+          <?php
+          while ($row = mysqli_fetch_array($result)) {
+          ?>
+            <div class="col-md-4">
+              <div class="service-box">
+                <div class="service-ico">
+                  <span class="ico-circle"><?php echo $row['image'] ?></span>
+                </div>
+                <div class="service-content">
+                  <h2 class="s-title"><?php echo $row['name'] ?></h2>
+                  <p class="s-description text-center">
+                    RM<?php echo $row['price'] ?> - <?php echo $row['description'] ?>
+                  </p>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="col-md-4">
-            <div class="service-box">
-              <div class="service-ico">
-                <span class="ico-circle"><i class="bi bi-bar-chart"></i></span>
-              </div>
-              <div class="service-content">
-                <h2 class="s-title">Photography</h2>
-                <p class="s-description text-center">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Magni adipisci eaque autem fugiat! Quia, provident vitae!
-                  Magni tempora perferendis eum non provident.
-                </p>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="service-box">
-              <div class="service-ico">
-                <span class="ico-circle"><i class="bi bi-binoculars"></i></span>
-              </div>
-              <div class="service-content">
-                <h2 class="s-title">Responsive Design</h2>
-                <p class="s-description text-center">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Magni adipisci eaque autem fugiat! Quia, provident vitae!
-                  Magni tempora perferendis eum non provident.
-                </p>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="service-box">
-              <div class="service-ico">
-                <span class="ico-circle"><i class="bi bi-brightness-high"></i></span>
-              </div>
-              <div class="service-content">
-                <h2 class="s-title">Graphic Design</h2>
-                <p class="s-description text-center">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Magni adipisci eaque autem fugiat! Quia, provident vitae!
-                  Magni tempora perferendis eum non provident.
-                </p>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="service-box">
-              <div class="service-ico">
-                <span class="ico-circle"><i class="bi bi-calendar4-week"></i></span>
-              </div>
-              <div class="service-content">
-                <h2 class="s-title">Marketing Services</h2>
-                <p class="s-description text-center">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Magni adipisci eaque autem fugiat! Quia, provident vitae!
-                  Magni tempora perferendis eum non provident.
-                </p>
-              </div>
-            </div>
-          </div>
+          <?php
+          }
+          ?>
         </div>
       </div>
     </section>
