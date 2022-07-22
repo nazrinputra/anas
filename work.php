@@ -125,11 +125,9 @@ $countCustomer = mysqli_num_rows($resultCustomer)
                     <div class="swiper-slide">
                       <div class="testimonial-box">
                         <div class="author-test">
-                          <img src="https://i.pravatar.cc/150?u=<?php echo $rowCustomer['id'] ?>" alt="" class="rounded-circle b-shadow-a" />
                           <span class="author"><?php echo $rowCustomer['name'] ?></span>
                         </div>
                         <div class="content-test">
-                          <h3 class="text-white">Customer Info</h3>
                           <p class="description lead">
                             Phone No: <?php echo $rowCustomer['phone'] ?> <br>
                             Car Plate No: <?php echo $rowCustomer['plate'] ?> <br>
@@ -147,7 +145,6 @@ $countCustomer = mysqli_num_rows($resultCustomer)
                   <div class="swiper-slide">
                     <div class="testimonial-box">
                       <div class="content-test">
-                        <h3 class="text-white">Customer Info</h3>
                         <p class="description lead">
                           There's no customer to display
                         </p>
