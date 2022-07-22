@@ -147,15 +147,14 @@ if (isset($_POST['registerButton'])) {
                     </p>
                     <ul class="list-ico">
                       <li>
-                        <span class="bi bi-geo-alt"></span> 329 WASHINGTON
-                        ST BOSTON, MA 02108
+                        <span class="bi bi-geo-alt"></span> Cyberjaya, Selangor
                       </li>
                       <li>
-                        <span class="bi bi-phone"></span> (617) 557-0089
+                        <span class="bi bi-phone"></span> (012) 345-6789
                       </li>
                       <li>
                         <span class="bi bi-envelope"></span>
-                        contact@example.com
+                        anas@email.com
                       </li>
                     </ul>
                   </div>
