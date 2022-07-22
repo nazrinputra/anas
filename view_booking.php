@@ -6,41 +6,47 @@ if (!$logged_in) {
   exit();
 }
 
-$sql = "SELECT * FROM service";
-$result = mysqli_query($connection, $sql);
+$sqlService = "SELECT * FROM service";
+$resultService = mysqli_query($connection, $sqlService);
 
-if (isset($_POST['createButton'])) {
-  $name = $_POST['name'];
-  $phone = $_POST['phone'];
-  $plate = $_POST['plate'];
-  $model = $_POST['model'];
+if (isset($_GET['id'])) {
+  $sqlBooking = "SELECT * FROM booking WHERE id={$_GET['id']}";
+  $resultBooking = mysqli_query($connection, $sqlBooking);
+  $rowBooking  = mysqli_fetch_array($resultBooking);
+  if (!is_array($rowBooking)) {
+    header("Location: booking.php");
+  } else {
+    $customer_id = $rowBooking['customer_id'];
+    $sqlCustomer = "SELECT * FROM customer WHERE id={$customer_id}";
+    $resultCustomer = mysqli_query($connection, $sqlCustomer);
+    $rowCustomer = mysqli_fetch_array($resultCustomer);
+  }
+}
+
+if (isset($_POST['saveButton'])) {
+  $id = $_POST['id'];
   $date = $_POST['date'];
   $service_id = $_POST['service_id'];
 
-  $sqlCustomer = "SELECT * FROM customer WHERE phone='{$phone}' AND plate='{$plate}'";
-  $resultCustomer = mysqli_query($connection, $sqlCustomer);
-  $rowCustomer  = mysqli_fetch_array($resultCustomer);
-  if (is_array($rowCustomer)) {
-    $customer_id = $rowCustomer['id'];
-  } else {
-    $sqlInsertCustomer = "INSERT into customer (name, phone, plate, model) VALUES ('{$name}', '{$phone}', '{$plate}', '{$model}')";
-    $sqlQueryInsertCustomer = mysqli_query($connection, $sqlInsertCustomer);
-
-    if (!$sqlQueryInsertCustomer) {
-      die("Database connection not established. " . mysqli_error($connection));
-    } else {
-      $customer_id = mysqli_insert_id($connection);
-    }
-  }
-
-  $sqlBooking = "INSERT into booking (date, service_id, customer_id) VALUES ('{$date}', '{$service_id}', '{$customer_id}')";
-  $sqlQueryBooking = mysqli_query($connection, $sqlBooking);
-
-  if (!$sqlQueryBooking) {
+  $sql = "UPDATE booking SET date='{$date}', service_id='{$service_id}' WHERE id='{$id}'";
+  $result = mysqli_query($connection, $sql);
+  if (!$result) {
     die("Database connection not established. " . mysqli_error($connection));
   }
 
-  echo '<script>alert("Your booking has been placed. Thank you.");window.location.href="booking.php";</script>';
+  echo '<script>alert("Your booking has been updated.");window.location.href="booking.php";</script>';
+}
+
+if (isset($_GET['delete'])) {
+  $id = $_GET['delete'];
+
+  $sql = "DELETE FROM booking WHERE id='{$id}'";
+  $result = mysqli_query($connection, $sql);
+  if (!$result) {
+    die("Database connection not established. " . mysqli_error($connection));
+  }
+
+  echo '<script>alert("Your booking has been deleted.");window.location.href="booking.php";</script>';
 }
 ?>
 
@@ -116,34 +122,35 @@ if (isset($_POST['createButton'])) {
               <div class="row">
                 <div class="col">
                   <div class="title-box-2">
-                    <h5 class="title-left">Create Booking</h5>
+                    <h5 class="title-left">View Booking</h5>
                   </div>
                   <div>
                     <form action="" method="post" role="form" class="email-form">
                       <div class="row">
+                        <input type="hidden" name="id" value="<?php echo $rowBooking['id'] ?>" />
                         <div class="col-md-12 mb-3">
                           <div class="form-group">
-                            <input type="text" class="form-control" name="name" id="name" placeholder="Your Name" required />
+                            <input type="text" class="form-control" name="name" id="name" value="<?php echo $rowCustomer['name'] ?>" disabled />
                           </div>
                         </div>
                         <div class="col-md-12 mb-3">
                           <div class="form-group">
-                            <input type="number" class="form-control" name="phone" id="phone" placeholder="Your Phone No" min="0" step="1" required />
+                            <input type="number" class="form-control" name="phone" id="phone" value="<?php echo $rowCustomer['phone'] ?>" min="0" step="1" disabled />
                           </div>
                         </div>
                         <div class="col-md-12 mb-3">
                           <div class="form-group">
-                            <input type="text" class="form-control" name="plate" id="plate" placeholder="Your Car Plate No" required />
+                            <input type="text" class="form-control" name="plate" id="plate" value="<?php echo $rowCustomer['plate'] ?>" disabled />
                           </div>
                         </div>
                         <div class="col-md-12 mb-3">
                           <div class="form-group">
-                            <input type="text" class="form-control" name="model" id="model" placeholder="Your Car Model" required />
+                            <input type="text" class="form-control" name="model" id="model" value="<?php echo $rowCustomer['model'] ?>" disabled />
                           </div>
                         </div>
                         <div class="col-md-12 mb-3">
                           <div class="form-group">
-                            <input type="date" class="form-control" name="date" id="date" placeholder="Booking Date" min="<?php echo date('Y-m-d'); ?>" required />
+                            <input type="date" class="form-control" name="date" id="date" value="<?php echo $rowBooking['date'] ?>" min="<?php echo date('Y-m-d'); ?>" required />
                           </div>
                         </div>
                         <div class="col-md-12 mb-3">
@@ -151,9 +158,11 @@ if (isset($_POST['createButton'])) {
                             <select class="form-control" name="service_id" id="service_id">
                               <option disabled value="">Please select your desired service</option>
                               <?php
-                              while ($row = mysqli_fetch_array($result)) {
+                              while ($rowService = mysqli_fetch_array($resultService)) {
                               ?>
-                                <option value="<?php echo $row['id'] ?>"><?php echo $row['name'] ?></option>
+                                <option value="<?php echo $rowService['id'] ?>" <?php if ($rowService['id'] == $rowBooking['service_id']) echo "selected" ?>>
+                                  <?php echo $rowService['name'] ?>
+                                </option>
                               <?php
                               }
                               ?>
@@ -163,10 +172,13 @@ if (isset($_POST['createButton'])) {
                         <div class="col-md-12 text-center my-3">
                           <div class="error-message"><?php echo $error_message; ?></div>
                         </div>
-                        <div class="col-md-12 text-center">
-                          <button type="submit" name="createButton" class="button button-a button-big button-rouded">
-                            Create
+                        <div class="col-md-12 text-center d-flex justify-content-between">
+                          <button type="submit" name="saveButton" class="button button-a button-big button-rouded ml-5">
+                            Save
                           </button>
+                          <a href="view_booking.php?delete=<?php echo $rowBooking['id'] ?>" type="button" name="deleteButton" class="button button-b button-big button-rouded mr-5">
+                            Delete
+                          </a>
                         </div>
                       </div>
                     </form>

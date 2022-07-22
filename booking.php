@@ -42,7 +42,6 @@ $result = mysqli_query($connection, $sql);
       <nav id="navbar" class="navbar">
         <ul>
           <li><a class="nav-link scrollto" href="/index.php">Home</a></li>
-          <li><a class="nav-link scrollto" href="/about.php">About</a></li>
           <li><a class="nav-link scrollto" href="/services.php">Services</a></li>
           <li><a class="nav-link scrollto" href="/work.php">Work</a></li>
           <li><a class="nav-link scrollto active" href="/booking.php">booking</a></li>
@@ -125,16 +124,23 @@ $result = mysqli_query($connection, $sql);
             $customer_id = $row['customer_id'];
             $sqlCustomer = "SELECT * FROM customer WHERE id={$customer_id}";
             $resultCustomer = mysqli_query($connection, $sqlCustomer);
-            $rowCustomer = mysqli_fetch_array($resultCustomer)
+            $rowCustomer = mysqli_fetch_array($resultCustomer);
+
+            $service_id = $row['service_id'];
+            $sqlService = "SELECT * FROM service WHERE id={$service_id}";
+            $resultService = mysqli_query($connection, $sqlService);
+            $rowService = mysqli_fetch_array($resultService);
+
+            $title = $rowCustomer['plate'] . " - " . $rowService['name'];
           ?> {
-              title: '<?php echo $rowCustomer['plate'] . " - " . $rowCustomer['model'] ?>',
-              url: 'about.php',
-              start: '<?php echo $row['date'] ?>'
+              title: '<?php echo $title ?>',
+              url: 'view_booking.php?id=<?php echo $row['id'] ?>',
+              start: '<?php echo $row['date'] ?>',
             },
           <?php
           }
           ?>
-        ]
+        ],
       });
       calendar.render();
     });
