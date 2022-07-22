@@ -52,7 +52,6 @@ $count = mysqli_num_rows($result)
       <nav id="navbar" class="navbar">
         <ul>
           <li><a class="nav-link scrollto" href="/index.php">Home</a></li>
-          <li><a class="nav-link scrollto" href="/about.php">About</a></li>
           <li><a class="nav-link scrollto" href="/services.php">Services</a></li>
           <li><a class="nav-link scrollto" href="/work.php">Work</a></li>
           <li><a class="nav-link scrollto" href="/booking.php">booking</a></li>
@@ -80,7 +79,7 @@ $count = mysqli_num_rows($result)
 
   <main id="main" class="mt-5">
     <!-- ======= Users Section ======= -->
-    <section id="users" class="users-mf pt-5 route">
+    <section id="users" class="users-mf pt-5 route" style="background-image: url(assets/img/counters-bg.jpg)">
       <div class="container">
         <div class="row">
           <div class="col-sm-12">

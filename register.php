@@ -74,7 +74,6 @@ if (isset($_POST['registerButton'])) {
       <nav id="navbar" class="navbar">
         <ul>
           <li><a class="nav-link scrollto" href="/index.php">Home</a></li>
-          <li><a class="nav-link scrollto" href="/about.php">About</a></li>
           <li><a class="nav-link scrollto" href="/services.php">Services</a></li>
           <li><a class="nav-link scrollto" href="/work.php">Work</a></li>
           <li><a class="nav-link scrollto" href="/booking.php">booking</a></li>
